@@ -7,7 +7,7 @@ function ServiceCard({ service }) {
       <p className="service-description">{service.description}</p>
       <div className="service-meta">
         <span>{service.duration} min</span>
-        <span>${Number(service.price).toFixed(2)}</span>
+        <span>₱{Number(service.price).toFixed(2)}</span>
       </div>
       <Link to={`/booking/${service.id}`} className="btn btn-primary">
         Book This Service

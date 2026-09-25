@@ -104,9 +104,9 @@ function Booking() {
   return (
     <div className="booking-page">
       <h1>Book: {service.name}</h1>
-      <p className="service-meta">
-        {service.duration} min — ${Number(service.price).toFixed(2)}
-      </p>
+     <p className="service-meta">
+        {service.duration} min — ₱{Number(service.price).toFixed(2)}
+    </p>
 
       <form onSubmit={handleSubmit} className="booking-form">
         <label>

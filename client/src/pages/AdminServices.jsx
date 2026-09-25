@@ -107,7 +107,7 @@ function AdminServices() {
             <tr key={service.id}>
               <td>{service.name}</td>
               <td>{service.duration} min</td>
-              <td>${Number(service.price).toFixed(2)}</td>
+              <td>₱{Number(service.price).toFixed(2)}</td>
               <td className="actions-cell">
                 <button className="btn btn-small btn-confirm" onClick={() => setEditingService(service)}>
                   Edit

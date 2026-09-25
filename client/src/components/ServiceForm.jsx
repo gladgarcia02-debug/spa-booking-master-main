@@ -45,34 +45,68 @@ function ServiceForm({ editingService, onSubmit, onCancel, submitting }) {
  
   return (
     <form onSubmit={handleSubmit} className="booking-form service-form">
-      <h3>{editingService ? 'Edit Service' : 'Add New Service'}</h3>
+      <h3>{editingService ? "Edit Service" : "Add New Service"}</h3>
 
       <label>
         Name
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
       </label>
 
       <label>
         Description
-        <textarea name="description" value={formData.description} onChange={handleChange} rows={3} />
+        <textarea
+          name="description"
+          value={formData.description}
+          onChange={handleChange}
+          rows={3}
+        />
       </label>
 
       <label>
         Duration (minutes)
-        <input type="number" name="duration" min="1" value={formData.duration} onChange={handleChange} required />
+        <input
+          type="number"
+          name="duration"
+          min="1"
+          value={formData.duration}
+          onChange={handleChange}
+          required
+        />
       </label>
 
       <label>
-        Price ($)
-        <input type="number" name="price" min="0" step="0.01" value={formData.price} onChange={handleChange} required />
+        Price (₱)
+        <input
+          type="number"
+          name="price"
+          min="0"
+          step="0.01"
+          value={formData.price}
+          onChange={handleChange}
+          required
+        />
       </label>
 
       <div className="form-actions">
         <button type="submit" className="btn btn-primary" disabled={submitting}>
-          {submitting ? 'Saving...' : editingService ? 'Update Service' : 'Add Service'}
+          {submitting
+            ? "Saving..."
+            : editingService
+              ? "Update Service"
+              : "Add Service"}
         </button>
         {editingService && (
-          <button type="button" className="btn btn-secondary" onClick={onCancel}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={onCancel}
+          >
             Cancel Edit
           </button>
         )}
