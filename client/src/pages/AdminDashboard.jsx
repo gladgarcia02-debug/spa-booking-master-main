@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import BookingCard from '../components/BookingCard';
 
@@ -12,34 +12,44 @@ function AdminDashboard() {
 
   const adminUser = JSON.parse(localStorage.getItem('spa_admin_user') || 'null');
 
-  const loadBookings = () => {
-    setLoading(true);
-    api
-      .get('/bookings')
-      .then((res) => {
-        setBookings(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        if (err.response?.status === 401) {
-          navigate('/login');
-        } else {
-          setError('Failed to load bookings.');
-        }
-        setLoading(false);
-      });
-  };
-
   useEffect(() => {
+    let isMounted = true;
+
+    const loadBookings = async () => {
+      setLoading(true);
+
+      try {
+        const res = await api.get('/bookings');
+        if (isMounted) {
+          setBookings(res.data);
+        }
+      } catch (err) {
+        console.error(err);
+        if (isMounted) {
+          if (err.response?.status === 401) {
+            navigate('/login');
+          } else {
+            setError('Failed to load bookings.');
+          }
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
     loadBookings();
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [navigate]);
 
   const handleStatusChange = async (id, status) => {
     setUpdatingId(id);
     try {
       await api.patch(`/bookings/${id}/status`, { status });
-      // Update just that one row locally instead of refetching everything
       setBookings((prev) =>
         prev.map((b) => (b.id === id ? { ...b, status } : b))
       );
@@ -66,6 +76,7 @@ function AdminDashboard() {
         <h1>Admin Dashboard</h1>
         <div>
           {adminUser && <span className="admin-welcome">Hi, {adminUser.name}</span>}
+          <Link to="/admin/services" className="btn btn-secondary">Manage Services</Link>
           <button className="btn btn-secondary" onClick={handleLogout}>Log Out</button>
         </div>
       </div>

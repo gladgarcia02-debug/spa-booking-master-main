@@ -6,6 +6,7 @@ import Booking from './pages/Booking';
 import Confirmation from './pages/Confirmation';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminServices from './pages/AdminServices';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -24,6 +25,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/services"
+            element={
+              <ProtectedRoute>
+                <AdminServices />
               </ProtectedRoute>
             }
           />

@@ -7,11 +7,12 @@ const {
   updateService,
   deleteService,
 } = require('../controllers/serviceController');
+const requireAuth = require('../middleware/authMiddleware');
 
-router.get('/', getAllServices);
-router.get('/:id', getServiceById);
-router.post('/', createService);
-router.put('/:id', updateService);
-router.delete('/:id', deleteService);
+router.get('/', getAllServices);                    // public — customers browse services
+router.get('/:id', getServiceById);                   // public — booking page needs this
+router.post('/', requireAuth, createService);          // admin only
+router.put('/:id', requireAuth, updateService);         // admin only
+router.delete('/:id', requireAuth, deleteService);        // admin only
 
 module.exports = router;
