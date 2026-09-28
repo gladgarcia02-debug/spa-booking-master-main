@@ -1,5 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 
+const formatTimeLabel = (time) => {
+  if (!time) return "";
+
+  const [hourString, minuteString] = time.split(":");
+  const hour = Number(hourString);
+  const minute = Number(minuteString);
+  const suffix = hour >= 12 ? "PM" : "AM";
+  const hour12 = (hour % 12 === 0 ? 12 : hour % 12).toString().padStart(2, "0");
+
+  return `${hour12}:${String(minute).padStart(2, "0")} ${suffix}`;
+};
+
 function Confirmation() {
   const location = useLocation();
   const booking = location.state?.booking;
@@ -33,7 +45,7 @@ function Confirmation() {
           <strong>Date:</strong> {booking.booking_date}
         </p>
         <p>
-          <strong>Time:</strong> {booking.booking_time}
+          <strong>Time:</strong> {formatTimeLabel(booking.booking_time)}
         </p>
         <p>
           <strong>Status:</strong> {booking.status}

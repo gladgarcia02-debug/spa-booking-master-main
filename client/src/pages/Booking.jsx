@@ -14,6 +14,18 @@ const TIME_SLOTS = [
   "17:00",
 ];
 
+const formatTimeLabel = (time) => {
+  if (!time) return "";
+
+  const [hourString, minuteString] = time.split(":");
+  const hour = Number(hourString);
+  const minute = Number(minuteString);
+  const suffix = hour >= 12 ? "PM" : "AM";
+  const hour12 = (hour % 12 === 0 ? 12 : hour % 12).toString().padStart(2, "0");
+
+  return `${hour12}:${String(minute).padStart(2, "0")} ${suffix}`;
+};
+
 function Booking() {
   const { serviceId } = useParams();
   const navigate = useNavigate();
@@ -165,7 +177,7 @@ function Booking() {
             <option value="">Select a time</option>
             {availableTimeSlots.map((slot) => (
               <option key={slot} value={slot}>
-                {slot}
+                {formatTimeLabel(slot)}
               </option>
             ))}
           </select>

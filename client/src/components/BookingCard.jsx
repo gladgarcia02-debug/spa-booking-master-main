@@ -1,3 +1,15 @@
+const formatTimeLabel = (time) => {
+  if (!time) return "";
+
+  const [hourString, minuteString] = time.split(":");
+  const hour = Number(hourString);
+  const minute = Number(minuteString);
+  const suffix = hour >= 12 ? "PM" : "AM";
+  const hour12 = (hour % 12 === 0 ? 12 : hour % 12).toString().padStart(2, "0");
+
+  return `${hour12}:${String(minute).padStart(2, "0")} ${suffix}`;
+};
+
 function BookingCard({ booking, onStatusChange, updatingId }) {
   const isUpdating = updatingId === booking.id;
 
@@ -6,7 +18,7 @@ function BookingCard({ booking, onStatusChange, updatingId }) {
       <td>{booking.customer_name}</td>
       <td>{booking.service_name}</td>
       <td>{booking.booking_date}</td>
-      <td>{booking.booking_time}</td>
+      <td>{formatTimeLabel(booking.booking_time)}</td>
       <td>
         <span className={`status status-${booking.status}`}>{booking.status}</span>
       </td>
